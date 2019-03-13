@@ -8,7 +8,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Repository
 public class MySQLStore implements BlobStore {
@@ -44,33 +46,16 @@ public class MySQLStore implements BlobStore {
     public Optional<Blob> get(final String name) {
 
         String retrievSql = "SELECT cover FROM album WHERE id=?";
-        Blob blob = null;
+        AtomicReference<Blob> blob = new AtomicReference<>();
         int albumId = resolveAlbumId(name);
 
-        try {
-            Connection connection1 = jdbcTemplate.getDataSource().getConnection();
-            PreparedStatement preparedStatement = connection1.prepareStatement(retrievSql);
-            preparedStatement.setInt(1, albumId);
-
-            System.out.println("before result set");
-            ResultSet resultSet = preparedStatement.executeQuery();
-            System.out.println("after result set");
-
-            java.sql.Blob cover = null;
-            if (resultSet.next()) {
-                System.out.println("inside loop of result set");
-                cover = resultSet.getBlob("cover");
-            }
-//            System.out.println("lenght of blob: " + cover.length());
-
+        jdbcTemplate.query(retrievSql, Arrays.copyOf(new Object[]{albumId}, 1), rs -> {
+            java.sql.Blob cover = rs.getBlob("cover");
             InputStream binaryStream = cover.getBinaryStream();
-            blob = new Blob(name, binaryStream, "image/jpeg");
+            blob.set(new Blob(name, binaryStream, "image/jpeg"));
+        });
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return Optional.ofNullable(blob);
+        return Optional.ofNullable(blob.get());
     }
 
     private int resolveAlbumId(String name) {
