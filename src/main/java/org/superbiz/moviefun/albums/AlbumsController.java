@@ -28,11 +28,17 @@ public class AlbumsController {
     private final AlbumsBean albumsBean;
     private final BlobStore blobStore;
 
+/*
     public AlbumsController(AlbumsBean albumsBean, BlobStore blobStore) {
         this.albumsBean = albumsBean;
         this.blobStore = blobStore;
     }
+*/
 
+    public AlbumsController(AlbumsBean albumsBean, BlobStore dbStore) {
+        this.albumsBean = albumsBean;
+        this.blobStore = dbStore;
+    }
 
     @GetMapping
     public String index(Map<String, Object> model) {
