@@ -14,7 +14,6 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 --%>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -31,15 +30,16 @@
   <meta name="author" content="">
 
   <!-- Le styles -->
-  <link href="assets/css/bootstrap.css" rel="stylesheet">
-  <link href="assets/css/movie.css" rel="stylesheet">
+  <link href="../assets/css/bootstrap.css" rel="stylesheet">
+  <link href="../assets/css/movie.css" rel="stylesheet">
   <style>
     body {
       padding-top: 60px;
       /* 60px to make the container go all the way to the bottom of the topbar */
     }
   </style>
-  <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+  <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -60,10 +60,42 @@
 
   <h1>Moviefun</h1>
 
-  <p>Please select one of the following links:</p>
-  <a href="setup.jsp">Setup</a> - Sets up the application with some sample data<br/>
-  <a href="moviefun">Index</a> - Start the application<br/>
+  <h2>Seeded Database with the Following movies</h2>
+  <table width="500">
+    <tr>
+      <td><b>Title</b></td>
+      <td><b>Director</b></td>
+      <td><b>Genre</b></td>
+    </tr>
+    <c:forEach items="${requestScope.movies}" var="movie">
+      <tr>
+        <td>${ movie.title }</td>
+        <td>${ movie.director }</td>
+        <td>${ movie.genre }</td>
+      </tr>
+    </c:forEach>
+  </table>
 
+    <h2>Seeded Database with the Following albums</h2>
+    <table width="500">
+        <tr>
+            <td><b>Title</b></td>
+            <td><b>Artist</b></td>
+            <td><b>Year</b></td>
+        </tr>
+
+        <c:forEach items="${requestScope.albums}" var="album">
+            <tr>
+                <td> ${album.title} </td>
+                <td> ${album.artist} </td>
+                <td> ${album.year} </td>
+            </tr>
+        </c:forEach>
+    </table>
+
+
+    <h2>Continue</h2>
+  <a href="moviefun">Go to main app</a>
 </div>
 <!-- /container -->
 </body>

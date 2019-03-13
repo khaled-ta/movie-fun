@@ -22,3 +22,7 @@
     -moz-border-radius: 6px;
     border-radius: 6px;
 }
+
+.cover {
+    max-width: 500px;
+}

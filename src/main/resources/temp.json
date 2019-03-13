@@ -1,0 +1,13 @@
+{
+  "user-provided": [
+    {
+      "credentials": {
+        "access_key_id": "DQTDWZU7AV2YGV0ZA5P5",
+        "bucket": "moviefun",
+        "secret_access_key": "g3FGfrDM5OXi6FD+B0zl7bnMKZj+dp1cqaxtFwbv",
+        "endpoint": "http://127.0.0.1:9000"
+      },
+      "name": "photo-storage"
+    }
+  ]
+}
